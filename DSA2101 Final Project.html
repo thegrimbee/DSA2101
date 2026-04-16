@@ -14592,6 +14592,18 @@ so as to investigate their relationship with recipe ratings.</p>
 </div>
 </div>
 </div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Data-Cleaning-and-Preparation">Data Cleaning and Preparation<a class="anchor-link" href="#Data-Cleaning-and-Preparation">&#182;</a></h2><p>To ensure the quality of the analysis, several data cleaning steps were performed. Firstly, we focused only on the cuisine-based dataset, as the full recipe dataset lacked consistent country information.</p>
+
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -14711,6 +14723,18 @@ max     240.000000
 
 </div>
 
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We chose to remove missing values instead of imputing since we have sufficient data to capture trends, though we did experiment on the latter method.</p>
+
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -14719,16 +14743,10 @@ max     240.000000
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">cuisines</span><span class="p">[</span><span class="s2">"country"</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cuisines</span><span class="p">[</span><span class="s2">"calories"</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cuisines</span><span class="p">[</span><span class="s2">"total_time"</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cuisines</span><span class="p">[</span><span class="s2">"avg_rating"</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-
-<span class="n">HADNLE_MISSING</span> <span class="o">=</span> <span class="s2">"drop"</span> <span class="c1"># options: "drop", "impute"</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">HADNLE_MISSING</span> <span class="o">=</span> <span class="s2">"drop"</span> <span class="c1"># options: "drop", "impute"</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cuisines</span><span class="p">))</span>
 <span class="c1"># use drop if we have enough data</span>
 <span class="k">if</span> <span class="n">HADNLE_MISSING</span> <span class="o">==</span> <span class="s2">"drop"</span><span class="p">:</span> <span class="c1"># drops 126 rows, leaving us with 2092 rows, probably enough EDIT: yes enough</span>
-  <span class="c1"># for fair comparison, we only consider cuisines with non-null country, calories, total_time, and avg_rating</span>
   <span class="n">cuisines_handle_missing</span> <span class="o">=</span> <span class="n">cuisines</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">'country'</span><span class="p">,</span> <span class="s1">'calories'</span><span class="p">,</span> <span class="s1">'total_time'</span><span class="p">,</span> <span class="s1">'avg_rating'</span><span class="p">])</span>
 <span class="c1"># impute might introduce bias, but it allows us to keep more data</span>
 <span class="k">elif</span> <span class="n">HADNLE_MISSING</span> <span class="o">==</span> <span class="s2">"impute"</span><span class="p">:</span>
@@ -14738,23 +14756,6 @@ max     240.000000
   <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'total_time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'total_time'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'total_time'</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
   <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">'unknown'</span><span class="p">)</span>
   <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'avg_rating'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'avg_rating'</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'avg_rating'</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
-<span class="c1"># ensure data types are correct, only country needs changing</span>
-<span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'category'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cuisines_handle_missing</span><span class="p">))</span>
-
-<span class="c1"># drop rows with 0 total_time (verified that 0 total_time is due to missing total_time in the pages)</span>
-<span class="n">cuisines_handle_missing</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'total_time'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cuisines_handle_missing</span><span class="p">))</span>
-
-<span class="c1"># check country counts</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
-
-<span class="n">GROUP_OTHERS</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="c1"># for countries with less than 15 cuisines, we can group them into "Other"</span>
-<span class="k">if</span> <span class="n">GROUP_OTHERS</span><span class="p">:</span>
-  <span class="n">country_counts</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-  <span class="n">countries_to_group</span> <span class="o">=</span> <span class="n">country_counts</span><span class="p">[</span><span class="n">country_counts</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
-  <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">'Other'</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">countries_to_group</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14776,64 +14777,7 @@ max     240.000000
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>0
-32
-0
-97
-2218
-2092
-2043
-country
-Canadian                        64
-Chinese                         64
-Cuban                           64
-Indian                          64
-Russian                         64
-Filipino                        63
-French                          62
-Soul Food                       62
-Brazilian                       60
-Cajun and Creole                60
-Jewish                          59
-Vietnamese                      59
-Polish                          58
-Puerto Rican                    58
-Thai                            58
-Japanese                        57
-Amish and Mennonite             56
-Greek                           56
-Australian and New Zealander    55
-Italian                         55
-Korean                          55
-German                          54
-Spanish                         52
-Portuguese                      50
-Tex-Mex                         50
-Lebanese                        46
-Southern Recipes                46
-Jamaican                        40
-Persian                         36
-Peruvian                        35
-Scandinavian                    35
-Danish                          30
-Argentinian                     28
-Swedish                         28
-Turkish                         26
-Israeli                         23
-Norwegian                       23
-Indonesian                      22
-Malaysian                       22
-Pakistani                       22
-South African                   19
-Austrian                        18
-Dutch                           18
-Chilean                         16
-Finnish                         16
-Bangladeshi                     11
-Colombian                        9
-Swiss                            9
-Belgian                          6
-Name: count, dtype: int64
+<pre>2218
 </pre>
 </div>
 </div>
@@ -14842,6 +14786,18 @@ Name: count, dtype: int64
 
 </div>
 
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We set the country to be a categorical variable. Additionally, rows with a total preparation time of zero were removed, since these values indicated missing data rather than actual cooking time (verified by checking the links)</p>
+
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -14850,8 +14806,95 @@ Name: count, dtype: int64
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># might consider removing outliers, in that case, use </span>
-<span class="n">Q1</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[[</span><span class="s1">'calories'</span><span class="p">,</span> <span class="s1">'total_time'</span><span class="p">]]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'category'</span><span class="p">)</span>
+<span class="n">cuisines_handle_missing</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'total_time'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cuisines_handle_missing</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>2043
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>For countries with low counts, we chose to group them to “Others”</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># check country counts</span>
+<span class="c1"># print(cuisines_handle_missing['country'].value_counts())</span>
+
+<span class="n">GROUP_OTHERS</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">if</span> <span class="n">GROUP_OTHERS</span><span class="p">:</span>
+  <span class="n">country_counts</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+  <span class="n">countries_to_group</span> <span class="o">=</span> <span class="n">country_counts</span><span class="p">[</span><span class="n">country_counts</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
+  <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[</span><span class="s1">'country'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">'Other'</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">countries_to_group</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>We also chose to remove outliers for calories and total_time. This is because our goal is to capture the general trend, which might be skewed by outliers.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">Q1</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[[</span><span class="s1">'calories'</span><span class="p">,</span> <span class="s1">'total_time'</span><span class="p">]]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
 <span class="n">Q3</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="p">[[</span><span class="s1">'calories'</span><span class="p">,</span> <span class="s1">'total_time'</span><span class="p">]]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
 <span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
 <span class="n">l_out_cutoff</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
@@ -14869,8 +14912,104 @@ Name: count, dtype: int64
 <span class="k">else</span><span class="p">:</span>
   <span class="n">cuisines_cleaned</span> <span class="o">=</span> <span class="n">cuisines_handle_missing</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cuisines_cleaned</span><span class="p">))</span> <span class="c1"># left with 1765 data if drop is used, 1871 if impute is used</span>
+</pre></div>
 
-<span class="c1"># group by each criterion and calculate the average rating for each group</span>
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>calories     -237.5
+total_time   -100.0
+dtype: float64
+calories      906.5
+total_time    260.0
+dtype: float64
+1765
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Lastly, we also binned the calories and total_time into 5 categories, which we will use for our heatmap plot. For reference, the ranges of our bins are shown below:</p>
+<table>
+<thead><tr>
+<th>Calorie Bin</th>
+<th>Range</th>
+<th>Time Bin</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Very low</td>
+<td>(2.097, 183.6]</td>
+<td>Very short</td>
+<td>(0.741, 52.8]</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>(183.6, 364.2]</td>
+<td>Short</td>
+<td>(52.8, 104.6]</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>(364.2, 544.8]</td>
+<td>Moderate</td>
+<td>(104.6, 156.4]</td>
+</tr>
+<tr>
+<td>High</td>
+<td>(544.8, 725.4]</td>
+<td>Long</td>
+<td>(156.4, 208.2]</td>
+</tr>
+<tr>
+<td>Very high</td>
+<td>(725.4, 906.0]</td>
+<td>Very long</td>
+<td>(208.2, 260.0]</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># group by each criterion and calculate the average rating for each group</span>
 <span class="n">cuisines_by_country</span> <span class="o">=</span> <span class="n">cuisines_cleaned</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'country'</span><span class="p">)[</span><span class="s1">'avg_rating'</span><span class="p">]</span>\
   <span class="o">.</span><span class="n">mean</span><span class="p">()</span>\
   <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>\
@@ -14900,8 +15039,6 @@ Name: count, dtype: int64
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cuisines_by_country</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cuisines_by_calories</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cuisines_by_total_time</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cuisines_by_calories_binned</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cuisines_by_total_time_binned</span><span class="p">))</span>
 </pre></div>
 
      </div>
@@ -14923,18 +15060,9 @@ Name: count, dtype: int64
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>calories     -237.5
-total_time   -100.0
-dtype: float64
-calories      906.5
-total_time    260.0
-dtype: float64
-1765
-46
+<pre>46
 1765
 1765
-5
-5
 </pre>
 </div>
 </div>
@@ -14943,12 +15071,24 @@ dtype: float64
 
 </div>
 
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>A quick calculation for the correlation between average rating with calories and total_time shows very low correlations between them. However, this does not tell the full story as the relationship could be non-linear, joint, or captured within the country variable instead. Our plots will try to capture the trends that correlation could not.</p>
+
+</div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">cor_cal</span> <span class="o">=</span> <span class="n">cuisines_cleaned</span><span class="p">[</span><span class="s1">'avg_rating'</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">cuisines_cleaned</span><span class="p">[</span><span class="s1">'calories'</span><span class="p">])</span>
@@ -14992,60 +15132,6 @@ dtype: float64
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>To ensure the quality of the analysis, several data cleaning steps were performed. We focused only on the cuisine-based dataset, as the full recipe dataset lacked consistent country information. Rows with a total preparation time of zero were removed, since these values indicated missing data rather than actual cooking time (verified by checking the links). Additionally, we chose to remove missing values instead of imputing since we have sufficient data to capture trends, though we did experiment on the latter method. We also chose to remove outliers for calories and total_time. This is because our goal is to capture the general trend, which might be skewed by outliers. For countries with low counts, we chose to group them to “Others”. Lastly, we also binned the calories and total_time into 5 categories, which we will use for our heatmap plot. For reference, the ranges of our bins are shown below:</p>
-<table>
-<thead><tr>
-<th>Calorie Bin</th>
-<th>Range</th>
-<th>Time Bin</th>
-<th>Range</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Very low</td>
-<td>(2.097, 183.6]</td>
-<td>Very short</td>
-<td>(0.741, 52.8]</td>
-</tr>
-<tr>
-<td>Low</td>
-<td>(183.6, 364.2]</td>
-<td>Short</td>
-<td>(52.8, 104.6]</td>
-</tr>
-<tr>
-<td>Normal</td>
-<td>(364.2, 544.8]</td>
-<td>Moderate</td>
-<td>(104.6, 156.4]</td>
-</tr>
-<tr>
-<td>High</td>
-<td>(544.8, 725.4]</td>
-<td>Long</td>
-<td>(156.4, 208.2]</td>
-</tr>
-<tr>
-<td>Very high</td>
-<td>(725.4, 906.0]</td>
-<td>Very long</td>
-<td>(208.2, 260.0]</td>
-</tr>
-</tbody>
-</table>
-<p>A quick calculation for the correlation between average rating with calories and total_time shows very low correlations between them (0.0277 for calories and -0.006 for total_time). However, this does not tell the full story as the relationship could be non-linear, joint, or captured within the country variable instead. Our plots will try to capture the trends that correlation could not.</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Plot-1:-Choropleth-map-of-average-ratings-by-cuisine-type">Plot 1: Choropleth map of average ratings by cuisine type<a class="anchor-link" href="#Plot-1:-Choropleth-map-of-average-ratings-by-cuisine-type">&#182;</a></h2><h3 id="Guiding-question:-Does-the-cuisine-type-of-a-recipe-affect-its-average-rating?">Guiding question: Does the cuisine type of a recipe affect its average rating?<a class="anchor-link" href="#Guiding-question:-Does-the-cuisine-type-of-a-recipe-affect-its-average-rating?">&#182;</a></h3><p>To explore how recipe ratings vary across different cuisines globally, we used a choropleth map (heatmap). This is effective for displaying geographical patterns, allowing us to easily compare average ratings across countries and identify regional trends.
 Since the dataset uses cuisine names rather than actual country names, we created a mapping dictionary to match each cuisine to its corresponding country. This step is necessary for plotting on a world map, as the visualization requires standardized country names.
 Finally, we used Plotly Express to generate the choropleth map. The location parameter specifies the country names, while color represents the average rating. A red-to-green color scale (RdYlGn) was used, where lower ratings are shown in red and higher ratings in green. Since most ratings fall between 4 and 5, we constrained the color range to (4, 5) to enhance visual contrast.</p>
@@ -15058,7 +15144,7 @@ Finally, we used Plotly Express to generate the choropleth map. The location par
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#First Plot: heatmap plot of countries with the average rating of cuisines </span>
@@ -15224,7 +15310,7 @@ This pattern may be influenced by factors such as global popularity and familiar
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Plot 2: Bubble plot of countries an their average rating against mean calories on x axis and mean total_time on y-axis</span>
@@ -15409,7 +15495,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#plot 3: no cuisine/country here; comparison between ratings against calories/cooking time </span>
